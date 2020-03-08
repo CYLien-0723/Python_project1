@@ -1,1 +1,2 @@
-# Python_project1
+# Use python build UI and connect with server
+# =====
