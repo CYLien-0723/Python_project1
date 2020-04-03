@@ -62,25 +62,17 @@ def search_summary():
     #------------------------登入------------------------
     #選擇哪一廠>>中華\銅鑼
     Factory = str(w.factory.currentText())
-    if Factory=='中華': httpm = 'http://kyeda.kyec.com.tw:3000'
-    else: httpm = 'http://kyeda-tl.kyec.com.tw:3000'
+    if Factory=='中華': httpm = '******'
+    else: httpm = '******'
     try_max_time=5
     try_time=0
     while try_time<try_max_time:
         try:
             rs=requests.session()
             header={
-                'Connection':'keep-alive',
-                'Content-Length':'37',
-                'Accept':'application/json, text/plain, */*',
-                'Origin':httpm+'/login',
-                'User-Agent':'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36',
-                'Content-Type':'application/json;charset=UTF-8',
-                'Referer':httpm+'/login',
-                'Accept-Encoding':'gzip, deflate',
-                'Accept-Language':'zh-TW,zh;q=0.9,en-US;q=0.8,en;q=0.7'
+                'Key some request information
             }
-            js=json.loads('{"name":"1051402","password":"123456789"}')
+            js=json.loads('need password')
             res=rs.post(httpm+'/api/login',headers=header,json=js)
             AuthToken=res.headers['AuthToken']
             break
@@ -340,8 +332,8 @@ def search_item():
     #===開始查詢資料
     #選擇哪一場>>中華\銅鑼
     Factory = str(w.factory.currentText())
-    if Factory=='中華': httpm = 'http://kyeda.kyec.com.tw:3000'
-    else: httpm = 'http://kyeda-tl.kyec.com.tw:3000'
+    if Factory=='中華': httpm = '******'
+    else: httpm = '******'
     print(httpm)
     try_max_time=5
     try_time = 0
@@ -349,16 +341,16 @@ def search_item():
         try:
             rs=requests.session()
             if len(sb_need)!=0:#要指定查的sb則需要用比較久的查詢方式
-                js_search2='{"tests":{},"bins":[],"types":{"Ftr":"YES","Mpr":"YES","Ptr":"YES"},"files":[]}'
-                header3={'User-Authorization':AuthToken}
+                js_search2='******'
+                header3={'******'}
                 js3=json.loads(js_search2)
                 js3['files']=findata
                 js3['bins']=sb_need
                 res3=rs.post(httpm+'/api/datalog/filter/test/accu',headers=header3,json=js3)
                 fuckyouhaha = res3.json()[0]["FAILS"]#如果這邊就error就表示沒有抓到資料
             else:#不需要指定查的sb則用較快的查詢方式
-                js_search2='{"total":"","files":[]}'
-                header3={'User-Authorization':AuthToken}
+                js_search2='******'
+                header3={'******'}
                 js3=json.loads(js_search2)
                 js3['files']=findata
                 js3['total']=sum(findata_unit)
@@ -495,8 +487,8 @@ def search_group_summary():
     #================================開始一個個item搜尋其Group================================
     #選擇哪一場>>中華\銅鑼
     Factory = str(w.factory.currentText())
-    if Factory=='中華': httpm = 'http://kyeda.kyec.com.tw:3000'
-    else: httpm = 'http://kyeda-tl.kyec.com.tw:3000'
+    if Factory=='中華': httpm = '******'
+    else: httpm = '******'
     for userneed in user_item:
         for GB in range(len(Group_By)):
             time.sleep(1)
@@ -514,12 +506,10 @@ def search_group_summary():
             while try_time<try_max_time:#至少download資料要先成功>>才能有後續動作
                 try:
                     time.sleep(0.5)
-                    js_search3='''{"files":[],"tests":[{"LOOP_INDX":1,"TEST_TXT":"'''+itemname+'''","TEST_NUM":'''+itemnum+'''}],
-                    "types":{"Ptr":"YES","Mpr":"NO","Ftr":"NO"},"bins":[],
-                    "testLimits":[{"LTL":'''+itemlowlimit+''',"UTL":'''+itemhighlimit+'''}],"minMax":{"MIN":0,"MAX":999},"sites":[]}'''
+                    js_search3='''******'''
                     js4=json.loads(js_search3)
                     js4["files"]=Group_File[GB]
-                    header4={'User-Authorization':AuthToken}
+                    header4={'******'}
                     res4=rs.post(httpm+'/api/datalog/filter/test/accu',headers=header4,json=js4)
                     Group_datalog=res4.json()
                     fuckyouhaha = Group_datalog[0]['EXECS']
@@ -635,7 +625,7 @@ def search_scatter():
                         locals()['separate_summary_%s'%x2].append(xyz)#放summary
                 x2 = x2 + 1
         else:
-            alert('你只有 '+str(analysis_sep[str(separate_by[separate])].unique().tolist())+' 一個!!\n學別人by '+str(separate_by[separate])+' ???\n二百五???')
+            alert('你只有 '+str(analysis_sep[str(separate_by[separate])].unique().tolist())+' 一個!!\n學別人by '+str(separate_by[separate]))
             return
         #==將separate_file_x 與 separate_id_x 按照(xxxxxxxx_20180814203623.std.gz)的時間去排列如果filename的格式為如此的話
         for ttemp in range(1,x2):
@@ -744,25 +734,21 @@ def search_scatter():
                         #subplots_adjust(left=None, bottom=None, right=None, top=None,wspace=0.2, hspace=0.2)
                     #選擇哪一場>>中華\銅鑼
                     Factory = str(w.factory.currentText())
-                    if Factory=='中華': httpm = 'http://kyeda.kyec.com.tw:3000'
-                    else: httpm = 'http://kyeda-tl.kyec.com.tw:3000'
+                    if Factory=='中華': httpm = '******'
+                    else: httpm = '******'
                     try_time=0
                     try_max_time=5#超過一定次數~~就放棄(有時程式或昱冠會卡住)
                     fuckyouasshole=0
                     while try_time<try_max_time:#至少download資料要先成功>>才能有後續動作
                         try:
                             time.sleep(0.5)
-                            js_search3='''{
-                            "groupByKey":"agg","FILE_NAME":[],"isPrr":false,"FILE_TYPE":"FT",
-                            "searchOpt":{"tests":[{"LOOP_INDX":1,"TEST_TXT":"","TEST_NUM":'''+itemnum+'''}],
-                            "types":{"Ptr":"YES","Mpr":"NO","Ftr":"NO"},"files":[],"bins":[],
-                            "testLimits":[{"LTL":'''+itemlowlimit+''',"UTL":'''+itemhighlimit+'''}],"sites":[]}}'''
+                            js_search3='''******'''
                             #"PAdata":true / "minMax":{"MIN":0,"MAX":578728.5}
                             js4=json.loads(js_search3)
                             js4['searchOpt']['files']=locals()['separate_file_%s'%x2]
                             js4['FILE_NAME']=locals()['separate_file_%s'%x2]
                             js4['searchOpt']['tests'][0]['TEST_TXT']=item_all[userneed]['TEST_TXT']#有些item Name裡面有特殊字元~所以必須這樣放進去
-                            header4={'User-Authorization':AuthToken}
+                            header4={'******'}
                             res4=rs.post(httpm+'/api/datalogAnalysis/PApageData',headers=header4,json=js4)
                             datalog=res4.json()
                             fuckyouasshole = datalog['inputData'][0]['DATA'][0]['HB']
@@ -968,20 +954,15 @@ def search_scatter():
                     if save_yes:
                         #選擇哪一場>>中華\銅鑼
                         Factory = str(w.factory.currentText())
-                        if Factory=='中華': httpm = 'http://kyeda.kyec.com.tw:3000'
-                        else: httpm = 'http://kyeda-tl.kyec.com.tw:3000'
+                        if Factory=='中華': httpm = '******'
+                        else: httpm = '******'
                         #得到site資訊
                         try_max_time=5
                         try_time = 0
                         fuckyouasshole=0
                         while try_time < try_max_time:
                             try:
-                                js_search4='''{"chartType":"scatterPlot","groupKey":"agg",
-                                                "customChart":{"statsType":"C","custMinMax":{"custMax":100,"custMin":-100},
-                                                "chartParam":{"isBoxGroup":false,"isLimit":true,"isLogScale":false,"isLogValue":false,"isPercent":false,"isXtitle":true},
-                                                 "setNumber":{"interval":25}},
-                                                 "getDataOpt":{"FILE_NAME":[],"isPrr":false,"searchOpt":{},"FILE_TYPE":"FT"},
-                                                 "rawdata":[]}'''
+                                js_search4='''******'''
                                 js5=json.loads(js_search4)
                                 js5['getDataOpt']['searchOpt']=js4['searchOpt']
                                 js5['rawdata']=datalog['inputData']
@@ -1102,31 +1083,21 @@ def search_scatter():
                 if histogram_need:
                     #選擇哪一場>>中華\銅鑼
                     Factory = str(w.factory.currentText())
-                    if Factory=='中華': httpm = 'http://kyeda.kyec.com.tw:3000'
-                    else: httpm = 'http://kyeda-tl.kyec.com.tw:3000'
+                    if Factory=='中華': httpm = '******'
+                    else: httpm = '******'
                     try_max_time=5
                     try_time = 0
                     fuckyouhaha = 0
                     while try_time < try_max_time:
                         try:
                             rs=requests.session()
-                            js_search2='{"tests":{},"bins":[],"types":{"Ftr":"YES","Mpr":"YES","Ptr":"YES"},"files":[]}'
-                            header3={'User-Authorization':AuthToken}
+                            js_search2='******'
+                            header3={'******'}
                             js3=json.loads(js_search2)
                             js3['files']=findata
                             res3=rs.post(httpm+'/api/datalog/filter/test/accu',headers=header3,json=js3)
                             fuckyouhaha = res3.json()[0]["FAILS"]#如果這邊就error就表示沒有抓到資料
                             break
-                            '''
-                            js_search2='{"total":"","files":[]}'
-                            header3={'User-Authorization':AuthToken}
-                            js3=json.loads(js_search2)
-                            js3['files']=findata
-                            js3['total']=sum(findata_unit)
-                            res3=rs.post(httpm+'/api/datalog/filter/getHighestFails',headers=header3,json=js3)
-                            fuckyouhaha = res3.json()[0]["FAILS"]#如果這邊就error就表示沒有抓到資料
-                            break
-                            '''
                         except MemoryError:
                             w.Status.setText('Status: 昱冠回傳檔案太大..請減少資料量or單一item畫畫看')
                             alert('昱冠回傳檔案太大..請減少資料量or單一item畫畫看')
@@ -1158,20 +1129,15 @@ def search_scatter():
                     if x2==0:continue #直接從x2==1開始(要by的第一個機台開始)>>x2是all的
                     #選擇哪一場>>中華\銅鑼
                     Factory = str(w.factory.currentText())
-                    if Factory=='中華': httpm = 'http://kyeda.kyec.com.tw:3000'
-                    else: httpm = 'http://kyeda-tl.kyec.com.tw:3000'
+                    if Factory=='中華': httpm = '******'
+                    else: httpm = '******'
                     try_time=0
                     try_max_time=5
                     fuckyouhaha = 0
                     while try_time<try_max_time:#至少download資料要先成功>>才能有後續動作
                         try:
                             time.sleep(0.5)                        
-                            js_search3='''{"groupByKey":"agg","FILE_NAME":[],"isPrr":false,"FILE_TYPE":"FT",
-                            "searchOpt":{"tests":[{"LOOP_INDX":1,"TEST_TXT":"","TEST_NUM":'''+itemnum+'''}],
-                            "types":{"Ptr":"YES","Mpr":"NO","Ftr":"NO"},
-                            "files":[],"bins":[],
-                            "testLimits":[{"LTL":'''+itemlowlimit+''',"UTL":'''+itemhighlimit+'''}],
-                            "sites":[],"PAdata":true}}'''
+                            js_search3='''******'''
                             js4=json.loads(js_search3)
                             js4['searchOpt']['files']=locals()['separate_file_%s'%x2]
                             js4['FILE_NAME']=locals()['separate_file_%s'%x2]
@@ -1492,8 +1458,8 @@ def Binning_Analysis():
     try_time = 0
     while try_time<try_max_time:
         try:
-            js_search_Bintable='{"BIN_TYPE":"Sbr","groupByKey":"agg","FILE_NAME":[]}'
-            header_Bintable={'User-Authorization':AuthToken}
+            js_search_Bintable='******'
+            header_Bintable={'******'}
             js_Bintable=json.loads(js_search_Bintable)
             js_Bintable['FILE_NAME']=findata_need
             res_Bintable=rs.post(httpm+'/api/binning/getData',headers=header_Bintable,json=js_Bintable)
@@ -1794,15 +1760,15 @@ def get_sb():#得到目前勾選的summary有哪些SB
         return
     #選擇哪一場>>中華\銅鑼
     Factory = str(w.factory.currentText())
-    if Factory=='中華': httpm = 'http://kyeda.kyec.com.tw:3000'
-    else: httpm = 'http://kyeda-tl.kyec.com.tw:3000'
+    if Factory=='中華': httpm = '******'
+    else: httpm = '******'
     try_max_time=3
     try_time = 0
     while try_time < try_max_time:
         try:
             rs=requests.session()
-            js_search2='{"opts":["SITE_NUM","SOFT_BIN","ARM"],"files":[]}'
-            header3={'User-Authorization':AuthToken}
+            js_search2='******'
+            header3={'******'}
             js3=json.loads(js_search2)
             js3['files']=findata_need
             res3=rs.post(httpm+'/api/datalog/filter/test/distinctOpts',headers=header3,json=js3)
@@ -1845,9 +1811,6 @@ def Summary_Count():#計算勾選報表後的張數/顆數/良率
         w.label_Summary_Count.setText('報表張數: '+str(su_count)+' 總顆數: '+str(int(ea_count))+'  總良率: '+yi_count)
     except:w.label_Summary_Count.setText('報表張數: '+str(su_count)+' 總顆數: '+str(ea_count)+'  總良率: '+yi_count)
 
-
-def xxx():#小遊戲
-    os.system('//ch2oafs01/STM_APG/00.TE_Personal_Folder/10.CYL/雜七雜八/破壞桌面小遊戲.EXE')
 
 def SQL_condition_search(combo_object,SC_object):#搜尋SQL_1
     try:import pymysql
@@ -2070,15 +2033,15 @@ def CID_search():#CID_搜尋
             del locals()['filee_%s'%filee]
         #選擇哪一場>>中華\銅鑼
         Factory = str(w.factory.currentText())
-        if Factory=='中華': httpm = 'http://kyeda.kyec.com.tw:3000'
-        else: httpm = 'http://kyeda-tl.kyec.com.tw:3000'
+        if Factory=='中華': httpm = '******'
+        else: httpm = '******'
         try_time=0
         try_max_time=5#超過一定次數~~就放棄(有時程式或昱冠會卡住)
         fuckyouasshole=0
         while try_time<try_max_time:#至少download資料要先成功>>才能有後續動作
             try:
                 time.sleep(0.5)
-                js_CID1='''{"isUserDefined":true,"FILELIST":[],"RULES":[{"TEST_RULE":[{"ID":{"TEST_TXT":"","TEST_NUM":"","LOOP_INDX":1},"X":{"TEST_TXT":"","TEST_NUM":"","LOOP_INDX":1},"Y":{"TEST_TXT":"","TEST_NUM":"","LOOP_INDX":1}}]}]}'''
+                js_CID1='''******'''
                 jd1=json.loads(js_CID1)
                 jd1['FILELIST']=FILELIST
                 jd1['RULES'][0]['TEST_RULE'][0]['ID']['TEST_TXT']=item_all[CID_Rule_ID]['TEST_TXT']
@@ -2087,7 +2050,7 @@ def CID_search():#CID_搜尋
                 jd1['RULES'][0]['TEST_RULE'][0]['X']['TEST_NUM']=item_all[CID_Rule_X]['TEST_NUM']
                 jd1['RULES'][0]['TEST_RULE'][0]['Y']['TEST_TXT']=item_all[CID_Rule_Y]['TEST_TXT']
                 jd1['RULES'][0]['TEST_RULE'][0]['Y']['TEST_NUM']=item_all[CID_Rule_Y]['TEST_NUM']
-                headerd1={'User-Authorization':AuthToken}
+                headerd1={'******'}
                 resd1=rs.post(httpm+'/api/chipid/getwaferdata',headers=headerd1,json=jd1)
                 datalog_CID1=resd1.json()
                 fuckyouasshole = datalog_CID1['RESULT'][0]['DATA'][0]['HARD_BIN']
@@ -2110,20 +2073,20 @@ def CID_search():#CID_搜尋
         for it_need in CID_item_num_need:
             #選擇哪一場>>中華\銅鑼
             Factory = str(w.factory.currentText())
-            if Factory=='中華': httpm = 'http://kyeda.kyec.com.tw:3000'
-            else: httpm = 'http://kyeda-tl.kyec.com.tw:3000'
+            if Factory=='中華': httpm = '******'
+            else: httpm = '******'
             try_time=0
             try_max_time=5#超過一定次數~~就放棄(有時程式或昱冠會卡住)
             fuckyouasshole=0
             while try_time<try_max_time:#至少download資料要先成功>>才能有後續動作
                 try:
                     time.sleep(0.5)
-                    js_CID2='''{"files":[],"tests":[{"TEST_TXT":"","TEST_NUM":"","LOOP_INDX":1}],"types":{"Ptr":"YES","Mpr":"NO","Ftr":"YES"}}'''
+                    js_CID2='''******'''
                     jd2=json.loads(js_CID2)
                     jd2['files']=findata
                     jd2['tests'][0]['TEST_TXT']=item_all[it_need]['TEST_TXT']
                     jd2['tests'][0]['TEST_NUM']=item_all[it_need]['TEST_NUM']
-                    headerd2={'User-Authorization':AuthToken}
+                    headerd2={'******'}
                     resd2=rs.post(httpm+'/api/datalog/filter/test/data',headers=headerd2,json=jd2)
                     datalog_CID2=resd2.json()
                     fuckyouasshole = datalog_CID2[0]['DATA'][0]['HB']
@@ -2302,15 +2265,15 @@ def CID_list_all():#CID_全列
             del locals()['filee_%s'%filee]
         #選擇哪一場>>中華\銅鑼
         Factory = str(w.factory.currentText())
-        if Factory=='中華': httpm = 'http://kyeda.kyec.com.tw:3000'
-        else: httpm = 'http://kyeda-tl.kyec.com.tw:3000'
+        if Factory=='中華': httpm = '******'
+        else: httpm = '******'
         try_time=0
         try_max_time=5#超過一定次數~~就放棄(有時程式或昱冠會卡住)
         fuckyouasshole=0
         while try_time<try_max_time:#至少download資料要先成功>>才能有後續動作
             try:
                 time.sleep(0.5)
-                js_CID1='''{"isUserDefined":true,"FILELIST":[],"RULES":[{"TEST_RULE":[{"ID":{"TEST_TXT":"","TEST_NUM":"","LOOP_INDX":1},"X":{"TEST_TXT":"","TEST_NUM":"","LOOP_INDX":1},"Y":{"TEST_TXT":"","TEST_NUM":"","LOOP_INDX":1}}]}]}'''
+                js_CID1='''******'''
                 jd1=json.loads(js_CID1)
                 jd1['FILELIST']=FILELIST
                 jd1['RULES'][0]['TEST_RULE'][0]['ID']['TEST_TXT']=item_all[CID_Rule_ID]['TEST_TXT']
@@ -2319,7 +2282,7 @@ def CID_list_all():#CID_全列
                 jd1['RULES'][0]['TEST_RULE'][0]['X']['TEST_NUM']=item_all[CID_Rule_X]['TEST_NUM']
                 jd1['RULES'][0]['TEST_RULE'][0]['Y']['TEST_TXT']=item_all[CID_Rule_Y]['TEST_TXT']
                 jd1['RULES'][0]['TEST_RULE'][0]['Y']['TEST_NUM']=item_all[CID_Rule_Y]['TEST_NUM']
-                headerd1={'User-Authorization':AuthToken}
+                headerd1={'******'}
                 resd1=rs.post(httpm+'/api/chipid/getwaferdata',headers=headerd1,json=jd1)
                 datalog_CID1=resd1.json()
                 fuckyouasshole = datalog_CID1['RESULT'][0]['DATA'][0]['HARD_BIN']
@@ -2376,7 +2339,7 @@ def CID_list_all():#CID_全列
   
 app = QApplication(sys.argv)
 w = loadUi('untitled.ui')
-w.setWindowTitle('ㄇㄉㄈㄎ / MTFK')#視窗標題
+w.setWindowTitle('MTFK')#視窗標題
 #初始值
 item_all,summary_all,summary_need,findata= '','','',[]
 CID_Rule_group_check,CID_Rule_group_ID,CID_Rule_group_X,CID_Rule_group_Y=[True]*10,['']*10,['']*10,['']*10
